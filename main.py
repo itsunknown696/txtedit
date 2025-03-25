@@ -9,20 +9,34 @@ from delete import log_original_file, delete_lines
 # Conversation states
 ASK_FILE, ASK_START_LINE, ASK_END_LINE = range(3)
 
-TOKEN = "7782085620:AAG_ktDIMiH2DWIr0kO5DaeD8UjuTWOwN1U"  # Replace with your bot token
-LOG_CHANNEL_ID = -1002669209072  # Your private channel ID
+TOKEN = "YOUR_BOT_TOKEN"
+LOG_CHANNEL_ID = -10012345678  # Replace with your channel ID
 
 def start(update: Update, context: CallbackContext):
-    update.message.reply_text("📋 Use /del to edit TXT files 𝗛𝗶𝗶 , 𝗧𝗵𝗶𝘀 𝗜𝘀 𝗧𝘅𝗧 𝗘𝗱𝗶𝘁𝗼𝗿 𝗕𝗼𝘁 𝗪𝗵𝗶𝗰𝗵 𝗜𝘀 𝗖𝗿𝗲𝗮𝘁𝗲𝗱 𝗕𝘆 𝗡𝗼𝗺𝗶𝘀 𝗕𝘆 𝗧𝗵𝗶𝘀 𝗕𝗼𝘁 𝗬𝗼𝘂 𝗖𝗮𝗻 𝗘𝗮𝘀𝗶𝗹𝘆 𝗘𝗱𝗶𝘁 𝗬𝗼𝘂𝗿 𝗧𝘅𝗧 𝗙𝗶𝗹𝗲 𝗟𝗶𝗸𝗲/n/n 𝗗𝗲𝗹𝗲𝘁𝗶𝗻𝗴 𝗟𝗶𝗻𝗲𝘀/n/n𝗔𝗱𝗱𝗶𝗻𝗴 𝗧𝗲𝘅𝘁/n/n 𝗠𝗮𝗻𝘆 𝗠𝗼𝗿𝗲  ")
+    update.message.reply_text(
+        "**Hii There,This Is TxT Editor Bot Which Is Created By Nomis/n/nIt Contais Features Like/n» Deleting Lines/n»Adding Text/nMany More**",
+        parse_mode='Markdown'
+    )
     return ConversationHandler.END
 
 def del_command(update: Update, context: CallbackContext):
-    update.message.reply_text("📤 **Please send the TXT file:**")
+    update.message.reply_text(
+        "📤 *Please send your TXT file:*\n\n"
+        "The file should contain lines in format:\n"
+        "`Name1:Link1`\n"
+        "`Name2:Link2`\n"
+        "And so on...",
+        parse_mode='Markdown'
+    )
     return ASK_FILE
 
 def handle_file(update: Update, context: CallbackContext):
     if not update.message.document or not update.message.document.file_name.endswith('.txt'):
-        update.message.reply_text("❌ Please send a .txt file")
+        update.message.reply_text(
+            "❌ *Invalid File*\n\n"
+            "Please send a valid .txt file",
+            parse_mode='Markdown'
+        )
         return ConversationHandler.END
     
     # Save file
@@ -30,16 +44,28 @@ def handle_file(update: Update, context: CallbackContext):
     context.user_data['file_path'] = f"temp/{file.file_name}"
     file.get_file().download(context.user_data['file_path'])
     
-    update.message.reply_text("🔢 Enter START line number (e.g., 2):")
+    update.message.reply_text(
+        "🔢 *Enter START line number:*\n\n"
+        "Example: To delete from line 2, type `2`",
+        parse_mode='Markdown'
+    )
     return ASK_START_LINE
 
 def ask_end_line(update: Update, context: CallbackContext):
     try:
         context.user_data['start_line'] = int(update.message.text)
-        update.message.reply_text("↔️ Enter END line number (e.g., 4):")
+        update.message.reply_text(
+            "↔️ *Enter END line number:*\n\n"
+            "Example: To delete up to line 4, type `4`",
+            parse_mode='Markdown'
+        )
         return ASK_END_LINE
     except ValueError:
-        update.message.reply_text("❌ Please enter a valid number!")
+        update.message.reply_text(
+            "❌ *Invalid Input*\n\n"
+            "Please enter a valid number (e.g. 2)",
+            parse_mode='Markdown'
+        )
         return ASK_START_LINE
 
 def process_deletion(update: Update, context: CallbackContext):
@@ -57,22 +83,33 @@ def process_deletion(update: Update, context: CallbackContext):
         # Process deletion
         output_file, error = delete_lines(file_path, start_line, end_line)
         if error:
-            update.message.reply_text(error)
+            update.message.reply_text(
+                f"❌ *Error*\n\n{error}",
+                parse_mode='Markdown'
+            )
             return ConversationHandler.END
         
-        # Send result without thumbnail
+        # Send result
         update.message.reply_document(
             document=open(output_file, "rb"),
-            caption=f"✅ Deleted lines {start_line}-{end_line}"
+            caption=f"✅ Successfully deleted lines *{start_line}-{end_line}*",
+            parse_mode='Markdown'
         )
             
     except Exception as e:
-        update.message.reply_text(f"❌ Error: {str(e)}")
+        update.message.reply_text(
+            f"❌ *Critical Error*\n\n{str(e)}",
+            parse_mode='Markdown'
+        )
     
     return ConversationHandler.END
 
 def cancel(update: Update, context: CallbackContext):
-    update.message.reply_text("🚫 Operation cancelled")
+    update.message.reply_text(
+        "🚫 *Operation Cancelled*\n\n"
+        "No changes were made to your file",
+        parse_mode='Markdown'
+    )
     return ConversationHandler.END
 
 def main():
@@ -96,7 +133,7 @@ def main():
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(conv_handler)
 
-    print("Bot is running...")
+    print("🌟 Bot is running...")
     updater.start_polling()
     updater.idle()
 
