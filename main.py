@@ -13,7 +13,7 @@ TOKEN = "7782085620:AAG_ktDIMiH2DWIr0kO5DaeD8UjuTWOwN1U"  # Replace with your bo
 LOG_CHANNEL_ID = -1002669209072  # Your private channel ID
 
 def start(update: Update, context: CallbackContext):
-    update.message.reply_text("📋 Use /del to edit TXT files")
+    update.message.reply_text("📋 Use /del to edit TXT files 𝗛𝗶𝗶 , 𝗧𝗵𝗶𝘀 𝗜𝘀 𝗧𝘅𝗧 𝗘𝗱𝗶𝘁𝗼𝗿 𝗕𝗼𝘁 𝗪𝗵𝗶𝗰𝗵 𝗜𝘀 𝗖𝗿𝗲𝗮𝘁𝗲𝗱 𝗕𝘆 𝗡𝗼𝗺𝗶𝘀 𝗕𝘆 𝗧𝗵𝗶𝘀 𝗕𝗼𝘁 𝗬𝗼𝘂 𝗖𝗮𝗻 𝗘𝗮𝘀𝗶𝗹𝘆 𝗘𝗱𝗶𝘁 𝗬𝗼𝘂𝗿 𝗧𝘅𝗧 𝗙𝗶𝗹𝗲 𝗟𝗶𝗸𝗲/n/n 𝗗𝗲𝗹𝗲𝘁𝗶𝗻𝗴 𝗟𝗶𝗻𝗲𝘀/n/n𝗔𝗱𝗱𝗶𝗻𝗴 𝗧𝗲𝘅𝘁/n/n 𝗠𝗮𝗻𝘆 𝗠𝗼𝗿𝗲  ")
     return ConversationHandler.END
 
 def del_command(update: Update, context: CallbackContext):
