@@ -14,18 +14,14 @@ LOG_CHANNEL_ID = -1002669209072  # Replace with your channel ID
 
 def start(update: Update, context: CallbackContext):
     update.message.reply_text(
-        "**Hii There,This Is TxT Editor Bot Which Is Created By Nomis/n/nIt Contais Features Like/n» Deleting Lines/n»Adding Text/nMany More**",
+        "*ʜɪɪ ᴛʜᴇʀᴇ , ᴛʜɪs ɪs ᴛxᴛ ғɪʟᴇ ᴇᴅɪᴛᴏʀ ʙᴏᴛ , ᴛʜɪs ʙᴏᴛ ʜᴇʟᴘ ʏᴏᴜ ᴛᴏ ᴇᴅɪᴛ ʏᴏᴜʀ ᴛxᴛ ғɪʟᴇ\n\nɪᴛ ᴄᴏɴᴛᴀɪɴs ʙᴇʟᴏᴡ ғᴇᴀᴛᴜʀᴇs ʟɪᴋᴇ\n\n» ᴅᴇʟᴇᴛɪɴɢ ʟɪɴᴇs\n\n» ᴀᴅᴅɪɴɢ ᴛᴇxᴛ\n\nᴍᴀɴᴀɢᴇᴅ ʙʏ @ItsNomis***",
         parse_mode='Markdown'
     )
     return ConversationHandler.END
 
 def del_command(update: Update, context: CallbackContext):
     update.message.reply_text(
-        "📤 *Please send your TXT file:*\n\n"
-        "The file should contain lines in format:\n"
-        "`Name1:Link1`\n"
-        "`Name2:Link2`\n"
-        "And so on...",
+        "📤 *ᴘʟᴇᴀsᴇ sᴇɴᴅ ʏᴏᴜʀ ᴛxᴛ ғɪʟᴇ ɪɴ ᴡʜɪᴄʜ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴇʟᴇᴛᴇ ʟɪɴᴇs:\n\nᴍᴀɴᴀɢᴇᴅ ʙʏ @ItsNomis*",
         parse_mode='Markdown'
     )
     return ASK_FILE
@@ -33,8 +29,8 @@ def del_command(update: Update, context: CallbackContext):
 def handle_file(update: Update, context: CallbackContext):
     if not update.message.document or not update.message.document.file_name.endswith('.txt'):
         update.message.reply_text(
-            "❌ *Invalid File*\n\n"
-            "Please send a valid .txt file",
+            "❌ *ɪɴᴠᴀʟɪᴅ ғɪʟᴇ*\n\n"
+            "*ᴘʟᴇᴀsᴇ sᴇɴᴅ ᴀ ᴠᴀʟɪᴅ ᴛxᴛ ғɪʟᴇ*",
             parse_mode='Markdown'
         )
         return ConversationHandler.END
@@ -45,8 +41,7 @@ def handle_file(update: Update, context: CallbackContext):
     file.get_file().download(context.user_data['file_path'])
     
     update.message.reply_text(
-        "🔢 *Enter START line number:*\n\n"
-        "Example: To delete from line 2, type `2`",
+        "🔢 *ᴇɴᴛᴇʀ ᴛʜᴇ ɪɴɪᴛɪᴀʟ ɴᴜᴍʙᴇʀ ʟɪɴᴇ ғʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴇᴋᴇᴛᴇ:*\n\n",
         parse_mode='Markdown'
     )
     return ASK_START_LINE
@@ -55,15 +50,15 @@ def ask_end_line(update: Update, context: CallbackContext):
     try:
         context.user_data['start_line'] = int(update.message.text)
         update.message.reply_text(
-            "↔️ *Enter END line number:*\n\n"
-            "Example: To delete up to line 4, type `4`",
+            "↔️ *ᴇɴᴛᴇʀ ᴛʜᴇ ғɪɴᴀʟ ɴᴜᴍʙᴇʀ ʟɪɴᴇ ᴛᴏ ᴡʜᴇʀᴇ ʏᴏᴜ ʜᴀᴠᴇ ᴛᴏ ᴅᴇʟᴇᴛᴇ:*\n\n"
+            ,
             parse_mode='Markdown'
         )
         return ASK_END_LINE
     except ValueError:
         update.message.reply_text(
-            "❌ *Invalid Input*\n\n"
-            "Please enter a valid number (e.g. 2)",
+            "❌ *ɪɴᴠᴀʟɪᴅ ɪɴᴜᴛ*\n\n"
+            "*ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴛʜᴇ ᴠᴀʟɪᴅ ɴᴜᴍʙᴇʀ*",
             parse_mode='Markdown'
         )
         return ASK_START_LINE
@@ -84,7 +79,7 @@ def process_deletion(update: Update, context: CallbackContext):
         output_file, error = delete_lines(file_path, start_line, end_line)
         if error:
             update.message.reply_text(
-                f"❌ *Error*\n\n{error}",
+                f"❌ *ᴇʀʀᴏʀ*\n\n{error}",
                 parse_mode='Markdown'
             )
             return ConversationHandler.END
@@ -92,13 +87,13 @@ def process_deletion(update: Update, context: CallbackContext):
         # Send result
         update.message.reply_document(
             document=open(output_file, "rb"),
-            caption=f"✅ Successfully deleted lines *{start_line}-{end_line}*",
+            caption=f"*✅ sᴜᴄᴄᴇssғᴜʟʏ ᴅᴇʟᴇᴛᴇᴅ ʟɪɴᴇs *{start_line}-{end_line}*",
             parse_mode='Markdown'
         )
             
     except Exception as e:
         update.message.reply_text(
-            f"❌ *Critical Error*\n\n{str(e)}",
+            f"❌ *ᴇʀʀᴏʀ 404 , ᴛʀʏ ᴀɢᴀɪɴ*\n\n{str(e)}",
             parse_mode='Markdown'
         )
     
@@ -106,8 +101,8 @@ def process_deletion(update: Update, context: CallbackContext):
 
 def cancel(update: Update, context: CallbackContext):
     update.message.reply_text(
-        "🚫 *Operation Cancelled*\n\n"
-        "No changes were made to your file",
+        "🚫 *ᴏᴘᴇʀᴀᴛɪᴏɴ ᴄᴏɴᴄᴇʟʟᴇᴅ*\n\n"
+        "*ɴᴏ ᴄʜᴀɴɢᴇ ᴡᴇʀᴇ ᴍᴀᴅᴇ ɪɴᴛᴏ ʏᴏᴜʀ ᴛxᴛ ғɪʟᴇ*",
         parse_mode='Markdown'
     )
     return ConversationHandler.END
