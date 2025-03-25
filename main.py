@@ -6,21 +6,18 @@ from telegram.ext import (
 )
 from delete import log_original_file, delete_lines
 
-# States
+# Conversation states
 ASK_FILE, ASK_START_LINE, ASK_END_LINE = range(3)
 
 TOKEN = "7782085620:AAG_ktDIMiH2DWIr0kO5DaeD8UjuTWOwN1U"  # Replace with your bot token
 LOG_CHANNEL_ID = -1002669209072  # Your private channel ID
-
-# Ensure temp directory exists
-os.makedirs("temp", exist_ok=True)
 
 def start(update: Update, context: CallbackContext):
     update.message.reply_text("📋 Use /del to edit TXT files")
     return ConversationHandler.END
 
 def del_command(update: Update, context: CallbackContext):
-    update.message.reply_text("📤 Please send the TXT file:")
+    update.message.reply_text("📤 **Please send the TXT file:**")
     return ASK_FILE
 
 def handle_file(update: Update, context: CallbackContext):
@@ -63,13 +60,11 @@ def process_deletion(update: Update, context: CallbackContext):
             update.message.reply_text(error)
             return ConversationHandler.END
         
-        # Send result
-        with open("nKr.jpg", "rb") as thumb:
-            update.message.reply_document(
-                document=open(output_file, "rb"),
-                thumb=thumb,
-                caption=f"✅ Deleted lines {start_line}-{end_line}"
-            )
+        # Send result without thumbnail
+        update.message.reply_document(
+            document=open(output_file, "rb"),
+            caption=f"✅ Deleted lines {start_line}-{end_line}"
+        )
             
     except Exception as e:
         update.message.reply_text(f"❌ Error: {str(e)}")
@@ -81,9 +76,13 @@ def cancel(update: Update, context: CallbackContext):
     return ConversationHandler.END
 
 def main():
+    # Create temp directory if not exists
+    os.makedirs("temp", exist_ok=True)
+
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
 
+    # Conversation handler
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('del', del_command)],
         states={
