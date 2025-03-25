@@ -41,7 +41,7 @@ def handle_file(update: Update, context: CallbackContext):
     file.get_file().download(context.user_data['file_path'])
     
     update.message.reply_text(
-        "🔢 *ᴇɴᴛᴇʀ ᴛʜᴇ ɪɴɪᴛɪᴀʟ ɴᴜᴍʙᴇʀ ʟɪɴᴇ ғʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴇᴋᴇᴛᴇ:*\n\n",
+        "🔢 *ᴇɴᴛᴇʀ ᴛʜᴇ ɪɴɪᴛɪᴀʟ ɴᴜᴍʙᴇʀ ʟɪɴᴇ ғʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴇʟᴇᴛᴇ:*\n\n",
         parse_mode='Markdown'
     )
     return ASK_START_LINE
