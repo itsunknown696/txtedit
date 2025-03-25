@@ -50,8 +50,7 @@ def ask_end_line(update: Update, context: CallbackContext):
     try:
         context.user_data['start_line'] = int(update.message.text)
         update.message.reply_text(
-            "↔️ *ᴇɴᴛᴇʀ ᴛʜᴇ ғɪɴᴀʟ ɴᴜᴍʙᴇʀ ʟɪɴᴇ ᴛᴏ ᴡʜᴇʀᴇ ʏᴏᴜ ʜᴀᴠᴇ ᴛᴏ ᴅᴇʟᴇᴛᴇ:*\n\n"
-            ,
+            "↔️ *ᴇɴᴛᴇʀ ᴛʜᴇ ғɪɴᴀʟ ɴᴜᴍʙᴇʀ ʟɪɴᴇ ᴛᴏ ᴡʜᴇʀᴇ ʏᴏᴜ ʜᴀᴠᴇ ᴛᴏ ᴅᴇʟᴇᴛᴇ:*\n\n",
             parse_mode='Markdown'
         )
         return ASK_END_LINE
