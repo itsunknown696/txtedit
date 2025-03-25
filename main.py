@@ -9,8 +9,8 @@ from delete import log_original_file, delete_lines
 # Conversation states
 ASK_FILE, ASK_START_LINE, ASK_END_LINE = range(3)
 
-TOKEN = "YOUR_BOT_TOKEN"
-LOG_CHANNEL_ID = -10012345678  # Replace with your channel ID
+TOKEN = "7782085620:AAG_ktDIMiH2DWIr0kO5DaeD8UjuTWOwN1U"
+LOG_CHANNEL_ID = -1002669209072  # Replace with your channel ID
 
 def start(update: Update, context: CallbackContext):
     update.message.reply_text(
