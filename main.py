@@ -7,8 +7,7 @@ from telegram.ext import (
 from delete import log_original_file, delete_lines
 
 # Conversation states
-ASK_FILE, ASK_START_LINE, ASK_END_LINE = range(3)
-
+ASK_FILE, ASK_START_LINE, ASK_END_LINE, ASK_ADD_FILE, ASK_ADD_START, ASK_ADD_END, ASK_ADD_TEXT, ASK_ADD_POSITION = range(8)
 TOKEN = "7782085620:AAG_ktDIMiH2DWIr0kO5DaeD8UjuTWOwN1U"
 LOG_CHANNEL_ID = -1002669209072
 
