@@ -240,7 +240,7 @@ def main():
     add_conv_handler = ConversationHandler(
         entry_points=[CommandHandler('add', add_command)],
         states={
-            ASK_ADD_FILE: [MessageHandler(Filters.document, handle_add_file)],
+            ASK_FILE: [MessageHandler(Filters.document, handle_add_file)],
             ASK_ADD_START: [MessageHandler(Filters.text & ~Filters.command, ask_add_end)],
             ASK_ADD_END: [MessageHandler(Filters.text & ~Filters.command, ask_add_text)],
             ASK_ADD_TEXT: [MessageHandler(Filters.text & ~Filters.command, ask_add_position)],
